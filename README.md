@@ -18,10 +18,10 @@ Las fases siguientes (cuestionario funcional, agente de IA, generación real de 
 
 ## Cómo verlo
 
-Clona el repositorio y abre `index.html` con Live Server de VS Code:
+Ingresa al suiguiente link:
 
 ```bash
-git clone https://github.com/christianestrada1102/Mi-Linux.git
+https://christianestrada1102.github.io/Mi-Linux/
 ```
 
 ---
