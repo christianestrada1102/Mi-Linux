@@ -20,9 +20,9 @@ Las fases siguientes (cuestionario funcional, agente de IA, generación real de 
 
 Ingresa al suiguiente link:
 
-```bash
+
 https://christianestrada1102.github.io/Mi-Linux/
-```
+
 
 ---
 
