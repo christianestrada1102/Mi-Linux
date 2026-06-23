@@ -28,4 +28,13 @@ git clone https://github.com/christianestrada1102/Mi-Linux.git
 
 ## Autor
 
-Christian Estrada — [codebynas.dev](https://codebynas.dev)
+**Christian Estrada**
+Chihuahua, México
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-000000?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/christian-estrada-a59130386/)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/christianestrada1102)
+[![X](https://img.shields.io/badge/X-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/CodeByNAS)
+
+---
+
+CodeByNas © 2026
