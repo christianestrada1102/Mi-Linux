@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Linux — Tu setup Linux, generado a tu medida</title>
+  <meta name="description" content="Mi Linux toma tu perfil, tus herramientas y tu hardware, y genera un script post-instalación revisable, antes de tocar tu sistema.">
+
+  <meta property="og:title" content="Mi Linux — Tu setup Linux, generado a tu medida">
+  <meta property="og:description" content="Respondes un cuestionario corto. Mi Linux elige distro, entorno gráfico y paquetes, y te entrega un script revisable.">
+  <meta property="og:image" content="/assets/images/hero-distros.jpg">
+
+  <meta name="theme-color" content="#0B0B0D">
+
+  <link rel="preload" href="assets/fonts/DxGaster-Thin.otf" as="font" type="font/otf" crossorigin>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <a href="#top" class="navbar__logo">
+      <span class="navbar__logo-text">Mi Linux</span>
+      <span class="navbar__dot"></span>
+    </a>
+    <div class="navbar__links-inner navbar__links">
+      <a href="#como-funciona" class="navbar__link">Cómo funciona</a>
+      <a href="#para-quien" class="navbar__link">Para quién</a>
+      <a href="#roadmap" class="navbar__link">Roadmap</a>
+    </div>
+    <div class="navbar__cta-wrap">
+      <a href="#cta-final" class="pill-link">Crear mi setup</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="top" class="hero">
+      <div class="container">
+        <div class="hero__text">
+          <div class="hero__eyebrow">
+            <span>Linux setup generator · 2026</span>
+          </div>
+          <h1>Tu setup Linux, generado a tu <em class="italic-accent">medida</em>.</h1>
+          <p class="hero__subhead">Toma tu perfil, tu hardware y tu forma de trabajar. Devuelve un script post-instalación, revisable, tuyo.</p>
+          <div class="hero__actions">
+            <a href="#cta-final" class="btn-primary">Crear mi setup <span>→</span></a>
+            <a href="#preview" class="btn-ghost">Ver ejemplo de setup</a>
+          </div>
+          <div class="hero__compat">
+            <span>Compatible con Arch</span>
+            <span class="dim">·</span>
+            <span>CachyOS</span>
+            <span class="dim">·</span>
+            <span class="accent">más distros próximamente</span>
+          </div>
+        </div>
+        <div class="media-frame hero__media">
+          <img src="assets/images/hero-distros.jpg" alt="Grid de distros Linux en pantalla de laptop">
+          <span class="float-badge float-badge--top-left">Empezando con Arch · CachyOS</span>
+          <span class="float-badge float-badge--bottom-right">v0.1 — MVP en construcción</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEMA -->
+    <section id="problema" class="section section--lg">
+      <div class="container">
+        <div class="eyebrow"><span class="section-number">[ 01 ]</span> El problema</div>
+        <h2 class="fade-up">Linux no es difícil.<br><span class="italic-muted">El proceso inicial, sí.</span></h2>
+
+        <div class="problem-images fade-up">
+          <figure>
+            <img src="assets/images/bsod-punch.jpg" alt="Pantalla azul de la muerte con un puño cerrado frente a ella" loading="lazy">
+            <figcaption>— Windows. Otra vez.</figcaption>
+          </figure>
+          <figure>
+            <img src="assets/images/terminal-errors.jpg" alt="Terminal Linux con cascada de errores de mirror" loading="lazy">
+            <figcaption>— pacman -Syu, día uno</figcaption>
+          </figure>
+        </div>
+
+        <div class="pain-grid">
+          <article class="card pain-card fade-up">
+            <div class="icon-box">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <h3>No sabes qué distro elegir.</h3>
+            <p>Arch, Mint, Pop!_OS, NixOS, Bazzite. Cada foro recomienda algo distinto, y la elección define los siguientes 6 meses.</p>
+          </article>
+          <article class="card pain-card fade-up">
+            <div class="icon-box">
+              <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+            </div>
+            <h3>Copias comandos que no entiendes.</h3>
+            <p>Pegas curl | sudo bash de un tutorial de 2019 y rezas. Un día rompe algo y no sabes qué tocó.</p>
+          </article>
+          <article class="card pain-card fade-up">
+            <div class="icon-box">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M21 12a9 9 0 11-3.5-7.1"/><polyline points="21 3 21 9 15 9"/></svg>
+            </div>
+            <h3>Cada reinstalación, empezar de cero.</h3>
+            <p>Cambias de disco o de laptop y se va contigo nada. Dos tardes recordando qué tenías instalado y dónde.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOLUCION -->
+    <section id="solucion" class="section">
+      <div class="container">
+        <div class="eyebrow"><span class="section-number">[ 02 ]</span> La solución</div>
+        <h2 class="fade-up">Mi Linux convierte tus necesidades en un <span class="italic-accent">setup listo.</span></h2>
+
+        <div class="solution-grid fade-up">
+          <div class="solution-item">
+            <div class="icon-box">
+              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <div class="solution-step-label">step.01</div>
+            <h3>Perfil inteligente</h3>
+            <p>Cuestionario corto que entiende uso, hardware, experiencia previa y tolerancia al riesgo.</p>
+          </div>
+          <div class="solution-item">
+            <div class="icon-box">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+            </div>
+            <div class="solution-step-label">step.02</div>
+            <h3>Recomendación personalizada</h3>
+            <p>Distro, kernel, entorno gráfico y stack de paquetes alineados a tu perfil, con justificación de cada elección.</p>
+          </div>
+          <div class="solution-item">
+            <div class="icon-box">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>
+            </div>
+            <div class="solution-step-label">step.03</div>
+            <h3>Script revisable</h3>
+            <p>Bash comentado e idempotente. Tú decides cuándo y cómo correrlo, Mi Linux nunca toca tu máquina.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section id="como-funciona" class="section section--lg">
+      <div class="container">
+        <div class="section-intro">
+          <div class="eyebrow"><span class="section-number">[ 03 ]</span> Cómo funciona</div>
+          <h2 class="fade-up">Cinco pasos.<br><span class="italic-muted">Cero comandos a ciegas.</span></h2>
+          <p>De cuestionario a setup reproducible en menos de diez minutos. La ejecución sigue siendo decisión tuya, el script vive en tu USB, no en nuestros servidores.</p>
+        </div>
+
+        <div class="stepper fade-up">
+          <div class="stepper__line"></div>
+          <div class="step step--active">
+            <div class="step__number">01</div>
+            <h4>Entras a la plataforma</h4>
+            <p>Web. Sin cuenta obligatoria, sin instalación.</p>
+          </div>
+          <div class="step">
+            <div class="step__number">02</div>
+            <h4>Respondes el cuestionario</h4>
+            <p>Guiado. Uso, hardware, experiencia, prioridades.</p>
+          </div>
+          <div class="step">
+            <div class="step__number">03</div>
+            <h4>El sistema genera tu perfil</h4>
+            <p>Tags legibles y score por categoría.</p>
+          </div>
+          <div class="step">
+            <div class="step__number">04</div>
+            <h4>Recibes tu setup recomendado</h4>
+            <p>Distro, entorno, paquetes y dotfiles base.</p>
+          </div>
+          <div class="step">
+            <div class="step__number">05</div>
+            <h4>Descargas y revisas el script</h4>
+            <p>Lo lees, lo modificas, lo corres cuando quieras.</p>
+          </div>
+        </div>
+
+        <div class="media-frame section-banner fade-up">
+          <img src="assets/images/usb-terminal.jpg" alt="USB Kingston frente a laptop con terminal en pantalla" loading="lazy">
+          <span class="caption">./mi-linux-setup.sh — listo en USB</span>
+        </div>
+        <p class="section-banner__note">El script generado pesa entre 4 y 8 KB. Tú decides cuándo y dónde ejecutarlo.</p>
+      </div>
+    </section>
+
+    <!-- PARA QUIEN -->
+    <section id="para-quien" class="section section--lg">
+      <div class="container">
+        <div class="eyebrow"><span class="section-number">[ 04 ]</span> Para quién</div>
+        <h2 class="fade-up">Cuatro perfiles. Una sola <em class="italic-accent">forma</em> <em class="italic-accent">de empezar.</em></h2>
+
+        <div class="profile-list fade-up">
+          <article class="profile-item">
+            <div class="profile-item__num">01</div>
+            <div>
+              <h4>El developer</h4>
+              <p>Quiere su entorno listo en una tarde, no en un fin de semana.</p>
+            </div>
+            <div class="profile-item__tags">
+              <span class="tag tag-accent">arch</span>
+              <span class="tag">hyprland</span>
+            </div>
+          </article>
+          <article class="profile-item">
+            <div class="profile-item__num">02</div>
+            <div>
+              <h4>El gamer migrando</h4>
+              <p>Viene de Windows, no quiere perder Steam ni el anti-cheat de sus juegos.</p>
+            </div>
+            <div class="profile-item__tags">
+              <span class="tag tag-accent">bazzite</span>
+              <span class="tag">proton</span>
+            </div>
+          </article>
+          <article class="profile-item">
+            <div class="profile-item__num">03</div>
+            <div>
+              <h4>El estudiante curioso</h4>
+              <p>Primera vez en Linux. Necesita algo estable que no le rompa los apuntes.</p>
+            </div>
+            <div class="profile-item__tags">
+              <span class="tag tag-accent">mint</span>
+              <span class="tag">gnome</span>
+            </div>
+          </article>
+          <article class="profile-item">
+            <div class="profile-item__num">04</div>
+            <div>
+              <h4>El entusiasta reproducible</h4>
+              <p>Reinstala seguido. Quiere su mismo entorno en cualquier máquina, sin notas sueltas.</p>
+            </div>
+            <div class="profile-item__tags">
+              <span class="tag tag-accent">nixos</span>
+              <span class="tag">flakes</span>
+            </div>
+          </article>
+        </div>
+
+        <div class="media-frame section-banner fade-up">
+          <img src="assets/images/arch-fastfetch.jpg" alt="Persona frente a laptop con Arch Linux fastfetch en pantalla" loading="lazy">
+          <span class="caption">fastfetch · arch linux · día 47</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PREVIEW -->
+    <section id="preview" class="section section--lg preview-section">
+      <div class="container">
+        <div class="eyebrow"><span class="section-number">[ 05 ]</span> Preview</div>
+        <h2 class="fade-up">Así se ve un <span class="italic-accent">setup generado.</span></h2>
+
+        <div class="preview-card fade-up">
+          <div class="preview-card__header">
+            <div class="preview-card__dots">
+              <span></span><span></span><span></span>
+              <span class="preview-card__path">mi-linux.app / setup / preview</span>
+            </div>
+            <span class="preview-card__status">● Listo para descargar</span>
+          </div>
+
+          <div class="preview-card__body">
+            <aside class="preview-aside">
+              <div class="preview-aside__label">— Perfil del usuario</div>
+              <h3>irene</h3>
+              <p class="preview-aside__sub">developer · uso diario · gaming ocasional</p>
+
+              <div class="preview-aside__tags">
+                <span class="tag tag-accent">Arch</span>
+                <span class="tag tag-accent">Hyprland</span>
+                <span class="tag">Gaming</span>
+                <span class="tag">16GB RAM</span>
+                <span class="tag">NVIDIA RTX</span>
+              </div>
+
+              <div class="preview-aside__specs">
+                <div class="spec-row"><span>Distro</span><span>arch-linux</span></div>
+                <div class="spec-row"><span>Kernel</span><span>linux-zen 6.10</span></div>
+                <div class="spec-row"><span>Compositor</span><span>hyprland</span></div>
+                <div class="spec-row"><span>Shell</span><span>fish</span></div>
+                <div class="spec-row"><span>Paquetes base</span><span>142</span></div>
+                <div class="spec-row"><span>Tamaño script</span><span style="color:var(--color-accent);">4.7 KB</span></div>
+              </div>
+            </aside>
+
+            <div class="preview-code">
+              <div class="preview-code__tabs">
+                <div class="preview-code__tab-list">
+                  <span>setup.sh</span>
+                  <span>postinstall.fish</span>
+                  <span>dotfiles.tar</span>
+                </div>
+                <button class="btn-primary" style="padding:7px 14px;font-size:11px;">↓ Descargar .sh</button>
+              </div>
+              <pre><code><span class="cm"># --- setup.sh ----------------------------------</span>
+<span class="cm"># generated for: irene · arch · hyprland · gaming</span>
+<span class="cm"># revisa este script antes de ejecutarlo.</span>
+
+<span class="sec">set</span> -euo pipefail
+
+<span class="acc">DISTRO</span>=<span class="sec">"arch"</span>
+<span class="acc">USER_PROFILE</span>=<span class="sec">"dev-gaming"</span>
+
+<span class="cm"># [01] mirrors + base system ----------------------------</span>
+<span class="sec">sudo</span> reflector --country MX,US --latest 10 \
+  --sort rate --save /etc/pacman.d/mirrorlist
+
+<span class="sec">sudo</span> pacman -Syu --noconfirm
+
+<span class="cm"># [02] hyprland + wayland stack -------------------------</span>
+<span class="sec">sudo</span> pacman -S --needed --noconfirm \
+  hyprland waybar wofi swaylock swww \
+  xdg-desktop-portal-hyprland mako kitty
+
+<span class="cm"># [03] gaming ------------------------------------------</span>
+<span class="sec">sudo</span> pacman -S --needed --noconfirm \
+  steam gamemode mangohud lib32-vulkan-icd-loader
+
+<span class="cm"># [04] dev toolchain ------------------------------------</span>
+<span class="sec">sudo</span> pacman -S --needed --noconfirm \
+  git neovim fish starship fzf ripgrep
+
+<span class="cm"># done. reinicia para entrar a hyprland.</span></code></pre>
+              <div class="preview-code__footer">
+                <span>5 bloques · 142 paquetes · validado</span>
+                <span class="accent">sha256: 3a7f...e21d</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="preview-disclaimer">Revisa siempre el script antes de ejecutarlo. Mi Linux no corre nada en tu sistema.</p>
+      </div>
+    </section>
+
+    <!-- SEGURIDAD -->
+    <section id="seguridad" class="section">
+      <div class="container">
+        <div class="security-layout">
+          <div class="security-intro">
+            <div class="eyebrow"><span class="section-number">[ 06 ]</span> Seguridad y control</div>
+            <h2 class="fade-up">Tú decides <span class="italic-accent">qué se ejecuta.</span></h2>
+            <p>Mi Linux nunca ejecuta nada en tu máquina. El script vive en tu disco: auditable, editable, descartable.</p>
+          </div>
+          <div class="security-grid fade-up">
+            <div class="security-item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+              <h4>Vista previa antes de descargar</h4>
+              <p>Lees el script completo en el navegador. Sin sorpresas dentro del archivo.</p>
+            </div>
+            <div class="security-item">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="10" rx="1"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              <h4>Sin ejecución automática</h4>
+              <p>No hay curl | bash. Decides tú cuándo correrlo y desde dónde.</p>
+            </div>
+            <div class="security-item">
+              <svg class="icon" viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5 3.5 8.5 8 10 4.5-1.5 8-5 8-10V6l-8-4z"/></svg>
+              <h4>Sin datos innecesarios</h4>
+              <p>No pedimos email para generar. No guardamos tu hardware. Sesión efímera por default.</p>
+            </div>
+            <div class="security-item">
+              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              <h4>Bloques validados</h4>
+              <p>Cada paquete viene de un bloque revisado en el repo público, no de scripts de terceros opacos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section id="roadmap" class="section section--lg">
+      <div class="container">
+        <div class="eyebrow"><span class="section-number">[ 07 ]</span> Roadmap</div>
+        <h2 class="fade-up">Hoy, mañana, <span class="italic-muted">después.</span></h2>
+
+        <div class="roadmap-grid fade-up">
+          <div class="roadmap-col">
+            <div class="roadmap-col__status">
+              <span class="status-dot"></span>
+              <span class="badge badge-accent">Disponible ahora</span>
+            </div>
+            <div class="roadmap-col__version">v0.1 — MVP actual</div>
+            <h3>Generador y revisión</h3>
+            <ul>
+              <li><span>✓</span> Cuestionario guiado de perfil</li>
+              <li><span>✓</span> MVP CachyOS / Arch</li>
+              <li><span>✓</span> Script bash descargable</li>
+              <li><span>✓</span> Preview en navegador</li>
+            </ul>
+          </div>
+          <div class="roadmap-col">
+            <div class="roadmap-col__status">
+              <span class="status-dot status-dot--muted"></span>
+              <span class="badge">En desarrollo</span>
+            </div>
+            <div class="roadmap-col__version">v0.2 — Coming soon</div>
+            <h3>Reproducibilidad</h3>
+            <ul>
+              <li><span>○</span> Soporte Ubuntu / Fedora</li>
+              <li><span>○</span> Perfiles guardados</li>
+              <li><span>○</span> Modo avanzado</li>
+              <li><span>○</span> Diff entre dos perfiles</li>
+            </ul>
+          </div>
+          <div class="roadmap-col">
+            <div class="roadmap-col__status">
+              <span class="status-dot status-dot--dim"></span>
+              <span class="badge">Próximamente</span>
+            </div>
+            <div class="roadmap-col__version">v1 — Futuro</div>
+            <h3>Ecosistema</h3>
+            <ul>
+              <li><span>·</span> Cuentas de usuario</li>
+              <li><span>·</span> Biblioteca de presets</li>
+              <li><span>·</span> Integración con dotfiles / GitHub</li>
+              <li><span>·</span> Sync de perfil entre máquinas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section id="cta-final" class="cta-final">
+      <div class="cta-final__bg">
+        <img src="assets/images/devs-coding.jpg" alt="Dos personas trabajando en laptops una al lado de la otra" loading="lazy">
+        <div class="cta-final__overlay"></div>
+      </div>
+      <div class="container cta-final__content">
+        <div class="cta-final__eyebrow"><span></span> Ready to start → <span></span></div>
+        <h2>Menos comandos al azar.</h2>
+        <p class="cta-final__sub">Más control sobre tu sistema.</p>
+        <a href="#top" class="btn-primary">Crear mi setup <span>→</span></a>
+        <div class="cta-final__note">Sin cuenta · Sin tarjeta · Sin descargas hasta que tú decidas</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer__row">
+      <a href="#top" class="navbar__logo">
+        <span class="navbar__logo-text">Mi Linux</span>
+        <span class="navbar__dot"></span>
+      </a>
+      <nav class="footer__links">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#roadmap">Roadmap</a>
+        <a href="#seguridad">Seguridad</a>
+        <a href="#">GitHub</a>
+      </nav>
+      <span class="footer__copy">© 2026 Mi Linux · hecho por <a href="https://www.codebynas.dev/" target="_blank" rel="noopener" class="footer__credit">CodeByNas</a></span>
+    </div>
+  </footer>
+
+  <script src="js/main.js" defer></script>
+</body>
+</html>

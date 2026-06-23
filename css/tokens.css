@@ -1,0 +1,62 @@
+@font-face {
+  font-family: 'DxGaster';
+  src: url('../assets/fonts/DxGaster-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DxGaster';
+  src: url('../assets/fonts/DxGaster-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  /* Colores */
+  --color-bg:        #0B0B0D;
+  --color-surface:   #111114;
+  --color-elevated:  #16161A;
+  --color-border:    #1F1F26;
+  --color-border-2:  #2A2A33;
+  --color-muted:     #474A56;
+  --color-text-2:    #929AAB;
+  --color-text:      #F5F5F7;
+  --color-accent:    #D3D5FD;
+  --color-accent-2:  #8B8FE0;
+
+  /* Tipografia */
+  --font-display: 'DxGaster', Georgia, serif;
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'JetBrains Mono', Menlo, Consolas, monospace;
+
+  /* Spacing */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+
+  /* Container */
+  --container-max: 1280px;
+  --container-pad: 48px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --container-pad: 24px;
+  }
+}
