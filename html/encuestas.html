@@ -3,12 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cuestionario — Mi Linux</title>
-  <meta name="description" content="Responde cuatro preguntas y Mi Linux genera tu setup Linux personalizado.">
+  <title>Crear mi setup — Mi Linux</title>
+  <meta name="description" content="Responde unas preguntas rápidas y genera tu setup Linux personalizado.">
 
-  <meta name="theme-color" content="#0B0B0D">
-
-  <link rel="icon" type="image/png" href="../assets/images/logo_2.png">
+  <link rel="icon" type="image/svg+xml" href="../assets/images/faviconn.svg">
+  <link rel="icon" type="image/png" href="../assets/images/MiLinux_favicon_variacion4.png">
 
   <link rel="preload" href="../assets/fonts/DxGaster-Thin.otf" as="font" type="font/otf" crossorigin>
 
@@ -17,340 +16,429 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="../css/main.css">
-  <link rel="stylesheet" href="../css/encuesta.css">
 
+  <style>
+    .survey-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-16) var(--space-6);
+    }
+
+    .survey-card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-12) var(--space-12);
+    }
+
+    .survey-progress {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .survey-progress__bar {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border-2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .survey-progress__fill {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+
+    .survey-progress__label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-text-2);
+      white-space: nowrap;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.is-active {
+      display: block;
+    }
+
+    .step__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+    }
+
+    .step__title {
+      font-family: var(--font-display);
+      font-weight: 100;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.1;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    .step__subtitle {
+      font-size: 14px;
+      color: var(--color-text-2);
+      margin-bottom: var(--space-8);
+      line-height: 1.6;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+
+    .option-btn {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: var(--space-6);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-2);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .option-btn:hover {
+      border-color: var(--color-text-2);
+      background: var(--color-elevated);
+    }
+
+    .option-btn.is-selected {
+      border-color: var(--color-accent);
+      background: var(--color-elevated);
+    }
+
+    .option-btn__label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .option-btn__desc {
+      font-size: 12px;
+      color: var(--color-text-2);
+      line-height: 1.5;
+    }
+
+    .step-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-nav--back {
+      background: transparent;
+      color: var(--color-text-2);
+      border: 1px solid var(--color-border-2);
+    }
+
+    .btn-nav--back:hover {
+      background: var(--color-surface);
+      color: var(--color-text);
+    }
+
+    .btn-nav--next {
+      background: var(--color-text);
+      color: var(--color-bg);
+    }
+
+    .btn-nav--next:hover {
+      background: var(--color-accent);
+    }
+
+    .btn-nav--back[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .survey-card {
+        padding: var(--space-8) var(--space-6);
+      }
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Step navigation radios — must precede <main> for the ~ selector to reach it -->
-  <input type="radio" name="q-step" id="s1"     class="q-ctrl" checked>
-  <input type="radio" name="q-step" id="s2"     class="q-ctrl">
-  <input type="radio" name="q-step" id="s3"     class="q-ctrl">
-  <input type="radio" name="q-step" id="s4"     class="q-ctrl">
-  <input type="radio" name="q-step" id="s-done" class="q-ctrl">
-
-  <!-- ── Navbar — copied from index.html ── -->
-  <nav class="navbar" id="navbar">
-    <a href="../index.html" class="navbar__logo">
+  <nav class="navbar" id="navbar" aria-label="Navegación principal">
+    <a class="navbar__logo" href="../index.html">
+      <img src="../assets/images/MiLinux_favicon_variacion4.png" alt="Mi Linux logo" width="24" height="24" class="navbar__logo-img">
       <span class="navbar__logo-text">Mi Linux</span>
       <span class="navbar__dot"></span>
     </a>
-    <div class="navbar__links-inner navbar__links">
-      <a href="../index.html#como-funciona" class="navbar__link">Cómo funciona</a>
-      <a href="../index.html#para-quien"    class="navbar__link">Para quién</a>
-      <a href="../index.html#roadmap"       class="navbar__link">Roadmap</a>
-    </div>
     <div class="navbar__cta-wrap">
-      <a href="#" class="pill-link">Crear mi setup</a>
+      <a class="pill-link" href="../index.html">← Volver al inicio</a>
     </div>
   </nav>
 
-  <main class="quiz-main">
+  <main class="survey-wrap">
+    <div class="survey-card">
 
-    <!-- ── Progress indicator ── -->
-    <div class="quiz-progress">
-      <div class="quiz-progress__top">
-        <div>
-          <span class="qp-label qp-label--1">Paso 01 / 04</span>
-          <span class="qp-label qp-label--2">Paso 02 / 04</span>
-          <span class="qp-label qp-label--3">Paso 03 / 04</span>
-          <span class="qp-label qp-label--4">Paso 04 / 04</span>
-          <span class="qp-label qp-label--done">Completado</span>
+      <div class="survey-progress">
+        <div class="survey-progress__bar">
+          <div class="survey-progress__fill" id="progress-fill" style="width: 20%"></div>
         </div>
-        <div class="quiz-progress__dots">
-          <span class="qp-dot qp-dot--1"></span>
-          <span class="qp-line qp-line--1"></span>
-          <span class="qp-dot qp-dot--2"></span>
-          <span class="qp-line qp-line--2"></span>
-          <span class="qp-dot qp-dot--3"></span>
-          <span class="qp-line qp-line--3"></span>
-          <span class="qp-dot qp-dot--4"></span>
+        <span class="survey-progress__label" id="progress-label">Paso 1 de 5</span>
+      </div>
+
+      <div class="step is-active" id="step-1">
+        <div class="step__eyebrow">step 01 / 05</div>
+        <h1 class="step__title">¿Cuál es tu experiencia con Linux?</h1>
+        <p class="step__subtitle">Esto ayuda a elegir la distro correcta y el nivel de configuración del script.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="ninguna">
+            <span class="option-btn__label">Ninguna</span>
+            <span class="option-btn__desc">Vengo de Windows o macOS y es mi primera vez.</span>
+          </button>
+          <button class="option-btn" data-value="basica">
+            <span class="option-btn__label">Básica</span>
+            <span class="option-btn__desc">He usado Ubuntu o Mint, pero sin tocar la terminal mucho.</span>
+          </button>
+          <button class="option-btn" data-value="intermedia">
+            <span class="option-btn__label">Intermedia</span>
+            <span class="option-btn__desc">Me muevo bien en la terminal, he instalado Arch antes.</span>
+          </button>
+          <button class="option-btn" data-value="avanzada">
+            <span class="option-btn__label">Avanzada</span>
+            <span class="option-btn__desc">Uso NixOS, escribo scripts, gestiono dotfiles con Git.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-1" aria-label="Paso anterior" hidden>
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-1" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
         </div>
       </div>
-      <div class="quiz-progress__bar">
-        <div class="quiz-progress__fill"></div>
+
+      <div class="step" id="step-2">
+        <div class="step__eyebrow">step 02 / 05</div>
+        <h2 class="step__title">¿Para qué usarás principalmente Linux?</h2>
+        <p class="step__subtitle">Puedes tener varios usos, pero elige el principal.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="desarrollo">
+            <span class="option-btn__label">Desarrollo</span>
+            <span class="option-btn__desc">Programar, servidores, Docker, entornos de trabajo.</span>
+          </button>
+          <button class="option-btn" data-value="gaming">
+            <span class="option-btn__label">Gaming</span>
+            <span class="option-btn__desc">Jugar con Steam, Proton y títulos AAA.</span>
+          </button>
+          <button class="option-btn" data-value="estudio">
+            <span class="option-btn__label">Estudio / Ofimática</span>
+            <span class="option-btn__desc">Documentos, navegación, aprendizaje general.</span>
+          </button>
+          <button class="option-btn" data-value="personalizado">
+            <span class="option-btn__label">Entorno personalizado</span>
+            <span class="option-btn__desc">Rice, tiling, dotfiles, Hyprland y estética.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-2" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-2" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
       </div>
+
+      <div class="step" id="step-3">
+        <div class="step__eyebrow">step 03 / 05</div>
+        <h2 class="step__title">¿Qué GPU tienes?</h2>
+        <p class="step__subtitle">Importante para el stack de drivers del script.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="nvidia">
+            <span class="option-btn__label">NVIDIA</span>
+            <span class="option-btn__desc">RTX, GTX — drivers propietarios o nouveau.</span>
+          </button>
+          <button class="option-btn" data-value="amd">
+            <span class="option-btn__label">AMD</span>
+            <span class="option-btn__desc">Radeon RX — drivers amdgpu open-source.</span>
+          </button>
+          <button class="option-btn" data-value="intel">
+            <span class="option-btn__label">Intel integrada</span>
+            <span class="option-btn__desc">Iris Xe o UHD — sin GPU dedicada.</span>
+          </button>
+          <button class="option-btn" data-value="nosé">
+            <span class="option-btn__label">No lo sé</span>
+            <span class="option-btn__desc">El sistema detectará el hardware automáticamente.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-3" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-3" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-4">
+        <div class="step__eyebrow">step 04 / 05</div>
+        <h2 class="step__title">¿Cuánta RAM tiene tu equipo?</h2>
+        <p class="step__subtitle">Esto afecta la elección del entorno gráfico y swap.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="4gb">
+            <span class="option-btn__label">4 GB o menos</span>
+            <span class="option-btn__desc">Entorno ligero recomendado: XFCE, LXQt.</span>
+          </button>
+          <button class="option-btn" data-value="8gb">
+            <span class="option-btn__label">8 GB</span>
+            <span class="option-btn__desc">Buen balance: GNOME, KDE Plasma sin problema.</span>
+          </button>
+          <button class="option-btn" data-value="16gb">
+            <span class="option-btn__label">16 GB</span>
+            <span class="option-btn__desc">Cualquier entorno + Docker + múltiples procesos.</span>
+          </button>
+          <button class="option-btn" data-value="32gb+">
+            <span class="option-btn__label">32 GB o más</span>
+            <span class="option-btn__desc">Sin límites — VMs, compilaciones pesadas.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-4" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-4" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-5">
+        <div class="step__eyebrow">step 05 / 05</div>
+        <h2 class="step__title">¿Qué tan dispuesto estás a configurar cosas manualmente?</h2>
+        <p class="step__subtitle">Esto determina si el script es conservador o completo.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="cero">
+            <span class="option-btn__label">Nada</span>
+            <span class="option-btn__desc">Quiero que todo funcione sin tocar nada más.</span>
+          </button>
+          <button class="option-btn" data-value="poco">
+            <span class="option-btn__label">Un poco</span>
+            <span class="option-btn__desc">Puedo seguir instrucciones simples si es necesario.</span>
+          </button>
+          <button class="option-btn" data-value="bastante">
+            <span class="option-btn__label">Bastante</span>
+            <span class="option-btn__desc">Me gusta entender lo que instalo y cómo funciona.</span>
+          </button>
+          <button class="option-btn" data-value="total">
+            <span class="option-btn__label">Control total</span>
+            <span class="option-btn__desc">Prefiero el script sin opiniones, yo elijo cada detalle.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-5" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-5" aria-label="Generar mi setup">
+            Generar mi setup
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
     </div>
-
-    <!-- ════════════════════════════════════
-         PASO 1 — Nivel de experiencia
-    ════════════════════════════════════ -->
-    <section class="q-step q-step--1">
-      <div class="q-inner">
-
-        <div class="q-header">
-          <div class="eyebrow"><span class="section-number">[ 01 ]</span> Experiencia</div>
-          <h2>¿Cuál es tu nivel de experiencia con Linux?</h2>
-        </div>
-
-        <div class="q-options">
-
-          <label class="q-option">
-            <input type="radio" name="q1" value="principiante">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">Principiante</span>
-              <span class="q-option__desc">nunca he usado Linux</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q1" value="intermedio">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">Intermedio</span>
-              <span class="q-option__desc">ya usé Linux antes</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q1" value="windows">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">Vengo de Windows</span>
-              <span class="q-option__desc">migrando desde Windows</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-        </div>
-
-        <div class="q-actions">
-          <label for="s2" class="btn-primary q-next">Siguiente <span aria-hidden="true">→</span></label>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════
-         PASO 2 — GPU / Hardware
-    ════════════════════════════════════ -->
-    <section class="q-step q-step--2">
-      <div class="q-inner">
-
-        <div class="q-header">
-          <div class="eyebrow"><span class="section-number">[ 02 ]</span> Hardware</div>
-          <h2>¿Qué tarjeta gráfica tiene tu equipo?</h2>
-        </div>
-
-        <div class="q-options">
-
-          <label class="q-option">
-            <input type="radio" name="q2" value="nvidia">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><line x1="6" y1="10" x2="10" y2="10"/><line x1="8" y1="8" x2="8" y2="12"/><line x1="14" y1="10" x2="18" y2="10"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">NVIDIA</span>
-              <span class="q-option__desc">drivers privativos</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q2" value="amd">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><polygon points="12 2 2 7 2 17 12 22 22 17 22 7"/><polyline points="2 7 12 12 22 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">AMD</span>
-              <span class="q-option__desc">open-source · mesa / amdgpu</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q2" value="intel">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="1"/><rect x="9" y="9" width="6" height="6"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">Intel integrada</span>
-              <span class="q-option__desc">gráficos integrados · iris / xe</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-        </div>
-
-        <div class="q-actions">
-          <label for="s3" class="btn-primary q-next">Siguiente <span aria-hidden="true">→</span></label>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════
-         PASO 3 — Entorno gráfico
-    ════════════════════════════════════ -->
-    <section class="q-step q-step--3">
-      <div class="q-inner">
-
-        <div class="q-header">
-          <div class="eyebrow"><span class="section-number">[ 03 ]</span> Entorno gráfico</div>
-          <h2>¿Qué entorno de escritorio prefieres?</h2>
-        </div>
-
-        <div class="q-options">
-
-          <label class="q-option">
-            <input type="radio" name="q3" value="kde">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="8" x2="21" y2="8"/><line x1="9" y1="8" x2="9" y2="21"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">KDE Plasma</span>
-              <span class="q-option__desc">rendimiento y personalización</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q3" value="gnome">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">GNOME</span>
-              <span class="q-option__desc">moderno y limpio</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q3" value="xfce">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">XFCE</span>
-              <span class="q-option__desc">ligero · equipos modestos</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-        </div>
-
-        <div class="q-actions">
-          <label for="s4" class="btn-primary q-next">Siguiente <span aria-hidden="true">→</span></label>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════
-         PASO 4 — Propósito
-    ════════════════════════════════════ -->
-    <section class="q-step q-step--4">
-      <div class="q-inner">
-
-        <div class="q-header">
-          <div class="eyebrow"><span class="section-number">[ 04 ]</span> Propósito</div>
-          <h2>¿Para qué usarás este equipo?</h2>
-        </div>
-
-        <div class="q-options">
-
-          <label class="q-option">
-            <input type="radio" name="q4" value="gaming">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="3"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="10" y1="12" x2="14" y2="12"/><circle cx="17" cy="10" r="1" fill="currentColor" stroke="none" style="fill:var(--color-accent)"/><circle cx="19" cy="13" r="1" fill="currentColor" stroke="none" style="fill:var(--color-accent)"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">Gaming</span>
-              <span class="q-option__desc">Steam · Wine · MangoHud</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q4" value="programacion">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">Programación</span>
-              <span class="q-option__desc">Git · Docker · VSCode</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-          <label class="q-option">
-            <input type="radio" name="q4" value="productividad">
-            <div class="q-option__icon-box">
-              <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-            </div>
-            <div class="q-option__text">
-              <span class="q-option__title">Productividad</span>
-              <span class="q-option__desc">LibreOffice · Thunderbird</span>
-            </div>
-            <div class="q-option__circle"></div>
-          </label>
-
-        </div>
-
-        <div class="q-actions">
-          <label for="s-done" class="btn-primary q-next">Ver mi setup <span aria-hidden="true">→</span></label>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ════════════════════════════════════
-         PANTALLA FINAL — Resumen
-    ════════════════════════════════════ -->
-    <section class="q-step q-step--done">
-      <div class="q-inner">
-        <div class="q-done">
-
-          <div class="q-done__check">
-            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-          </div>
-
-          <div class="eyebrow" style="justify-content:center; margin-bottom:var(--space-3);">
-            <span class="section-number">[ perfil generado ]</span>
-          </div>
-
-          <h2 class="q-done__title">Tu setup está <em class="italic-accent">listo.</em></h2>
-
-          <p class="q-done__sub">
-            Hemos analizado tu perfil y generado una recomendación personalizada de distro, entorno gráfico y paquetes. El script es tuyo: léelo, modifícalo, córrelo cuando quieras.
-          </p>
-
-          <a href="#" class="btn-primary">Generar mi script <span aria-hidden="true">→</span></a>
-
-          <p class="q-done__note">Sin cuenta · Sin tarjeta · Mi Linux nunca toca tu máquina</p>
-
-        </div>
-      </div>
-    </section>
-
   </main>
 
-  <!-- ── Footer — copied from index.html ── -->
-  <footer>
-    <div class="container footer__row">
-      <a href="../index.html" class="navbar__logo">
-        <span class="navbar__logo-text">Mi Linux</span>
-        <span class="navbar__dot"></span>
-      </a>
-      <nav class="footer__links">
-        <a href="../index.html#como-funciona">Cómo funciona</a>
-        <a href="../index.html#roadmap">Roadmap</a>
-        <a href="../index.html#seguridad">Seguridad</a>
-        <a href="#">GitHub</a>
-      </nav>
-      <span class="footer__copy">© 2026 Mi Linux · hecho por <a href="https://www.codebynas.dev/" target="_blank" rel="noopener" class="footer__credit">CodeByNas</a></span>
-    </div>
-  </footer>
+  <script>
+    const TOTAL_STEPS = 5;
+    let currentStep = 1;
+    const answers = {};
+
+    const progressFill = document.getElementById('progress-fill');
+    const progressLabel = document.getElementById('progress-label');
+
+    function showStep(n) {
+      document.querySelectorAll('.step').forEach((el) => el.classList.remove('is-active'));
+      document.getElementById('step-' + n).classList.add('is-active');
+      progressFill.style.width = (n / TOTAL_STEPS * 100) + '%';
+      progressLabel.textContent = 'Paso ' + n + ' de ' + TOTAL_STEPS;
+      currentStep = n;
+    }
+
+    document.querySelectorAll('[id^="btn-next-"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const stepEl = btn.closest('.step');
+        const selected = stepEl.querySelector('.option-btn.is-selected');
+        if (!selected) {
+          const firstOption = stepEl.querySelector('.option-btn');
+          if (firstOption) firstOption.classList.add('is-selected');
+        }
+        if (currentStep < TOTAL_STEPS) {
+          showStep(currentStep + 1);
+        }
+      });
+    });
+
+    document.querySelectorAll('[id^="btn-back-"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (currentStep > 1) showStep(currentStep - 1);
+      });
+    });
+
+    document.querySelectorAll('.option-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const siblings = btn.closest('.option-grid').querySelectorAll('.option-btn');
+        siblings.forEach((s) => s.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        answers['step' + currentStep] = btn.dataset.value;
+      });
+    });
+  </script>
 
 </body>
 </html>

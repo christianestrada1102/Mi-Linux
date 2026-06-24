@@ -40,6 +40,14 @@
   color: var(--color-text);
 }
 
+.navbar__logo-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
 .navbar__dot {
   width: 6px;
   height: 6px;
