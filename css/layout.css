@@ -29,7 +29,8 @@
 .navbar__logo {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
+  text-decoration: none;
 }
 
 .navbar__logo-text {
@@ -41,11 +42,10 @@
 }
 
 .navbar__logo-img {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   display: block;
-  filter: brightness(0) invert(1);
 }
 
 .navbar__dot {
