@@ -18,7 +18,7 @@ const observer = new IntersectionObserver(
 
 document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
 
-document.querySelectorAll('.navbar__link, .footer__col a').forEach((link) => {
+document.querySelectorAll('.navbar__link').forEach((link) => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
     if (href && href.startsWith('#')) {
