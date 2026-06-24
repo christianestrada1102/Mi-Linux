@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear mi setup — Mi Linux</title>
+  <meta name="description" content="Responde unas preguntas rápidas y genera tu setup Linux personalizado.">
+
+  <link rel="icon" type="image/svg+xml" href="../assets/images/faviconn.svg">
+  <link rel="icon" type="image/png" href="../assets/images/MiLinux_favicon_variacion4.png">
+
+  <link rel="preload" href="../assets/fonts/DxGaster-Thin.otf" as="font" type="font/otf" crossorigin>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/main.css">
+
+  <style>
+    .survey-wrap {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-16) var(--space-6);
+    }
+
+    .survey-card {
+      width: 100%;
+      max-width: 680px;
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      padding: var(--space-12) var(--space-12);
+    }
+
+    .survey-progress {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .survey-progress__bar {
+      flex: 1;
+      height: 2px;
+      background: var(--color-border-2);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .survey-progress__fill {
+      height: 100%;
+      background: var(--color-accent);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+    }
+
+    .survey-progress__label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-text-2);
+      white-space: nowrap;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.is-active {
+      display: block;
+    }
+
+    .step__eyebrow {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+    }
+
+    .step__title {
+      font-family: var(--font-display);
+      font-weight: 100;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.1;
+      color: var(--color-text);
+      margin-bottom: var(--space-3);
+    }
+
+    .step__subtitle {
+      font-size: 14px;
+      color: var(--color-text-2);
+      margin-bottom: var(--space-8);
+      line-height: 1.6;
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-3);
+    }
+
+    .option-btn {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: var(--space-6);
+      background: var(--color-bg);
+      border: 1px solid var(--color-border-2);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.2s ease, background 0.2s ease;
+      font-family: var(--font-sans);
+    }
+
+    .option-btn:hover {
+      border-color: var(--color-text-2);
+      background: var(--color-elevated);
+    }
+
+    .option-btn.is-selected {
+      border-color: var(--color-accent);
+      background: var(--color-elevated);
+    }
+
+    .option-btn__label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text);
+    }
+
+    .option-btn__desc {
+      font-size: 12px;
+      color: var(--color-text-2);
+      line-height: 1.5;
+    }
+
+    .step-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .btn-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .btn-nav--back {
+      background: transparent;
+      color: var(--color-text-2);
+      border: 1px solid var(--color-border-2);
+    }
+
+    .btn-nav--back:hover {
+      background: var(--color-surface);
+      color: var(--color-text);
+    }
+
+    .btn-nav--next {
+      background: var(--color-text);
+      color: var(--color-bg);
+    }
+
+    .btn-nav--next:hover {
+      background: var(--color-accent);
+    }
+
+    .btn-nav--back[hidden] {
+      display: none;
+    }
+
+    @media (max-width: 640px) {
+      .survey-card {
+        padding: var(--space-8) var(--space-6);
+      }
+
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar" aria-label="Navegación principal">
+    <a class="navbar__logo" href="../index.html">
+      <img src="../assets/images/MiLinux_favicon_variacion4.png" alt="Mi Linux logo" width="24" height="24" class="navbar__logo-img">
+      <span class="navbar__logo-text">Mi Linux</span>
+      <span class="navbar__dot"></span>
+    </a>
+    <div class="navbar__cta-wrap">
+      <a class="pill-link" href="../index.html">← Volver al inicio</a>
+    </div>
+  </nav>
+
+  <main class="survey-wrap">
+    <div class="survey-card">
+
+      <div class="survey-progress">
+        <div class="survey-progress__bar">
+          <div class="survey-progress__fill" id="progress-fill" style="width: 20%"></div>
+        </div>
+        <span class="survey-progress__label" id="progress-label">Paso 1 de 5</span>
+      </div>
+
+      <div class="step is-active" id="step-1">
+        <div class="step__eyebrow">step 01 / 05</div>
+        <h1 class="step__title">¿Cuál es tu experiencia con Linux?</h1>
+        <p class="step__subtitle">Esto ayuda a elegir la distro correcta y el nivel de configuración del script.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="ninguna">
+            <span class="option-btn__label">Ninguna</span>
+            <span class="option-btn__desc">Vengo de Windows o macOS y es mi primera vez.</span>
+          </button>
+          <button class="option-btn" data-value="basica">
+            <span class="option-btn__label">Básica</span>
+            <span class="option-btn__desc">He usado Ubuntu o Mint, pero sin tocar la terminal mucho.</span>
+          </button>
+          <button class="option-btn" data-value="intermedia">
+            <span class="option-btn__label">Intermedia</span>
+            <span class="option-btn__desc">Me muevo bien en la terminal, he instalado Arch antes.</span>
+          </button>
+          <button class="option-btn" data-value="avanzada">
+            <span class="option-btn__label">Avanzada</span>
+            <span class="option-btn__desc">Uso NixOS, escribo scripts, gestiono dotfiles con Git.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-1" aria-label="Paso anterior" hidden>
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-1" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-2">
+        <div class="step__eyebrow">step 02 / 05</div>
+        <h2 class="step__title">¿Para qué usarás principalmente Linux?</h2>
+        <p class="step__subtitle">Puedes tener varios usos, pero elige el principal.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="desarrollo">
+            <span class="option-btn__label">Desarrollo</span>
+            <span class="option-btn__desc">Programar, servidores, Docker, entornos de trabajo.</span>
+          </button>
+          <button class="option-btn" data-value="gaming">
+            <span class="option-btn__label">Gaming</span>
+            <span class="option-btn__desc">Jugar con Steam, Proton y títulos AAA.</span>
+          </button>
+          <button class="option-btn" data-value="estudio">
+            <span class="option-btn__label">Estudio / Ofimática</span>
+            <span class="option-btn__desc">Documentos, navegación, aprendizaje general.</span>
+          </button>
+          <button class="option-btn" data-value="personalizado">
+            <span class="option-btn__label">Entorno personalizado</span>
+            <span class="option-btn__desc">Rice, tiling, dotfiles, Hyprland y estética.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-2" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-2" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-3">
+        <div class="step__eyebrow">step 03 / 05</div>
+        <h2 class="step__title">¿Qué GPU tienes?</h2>
+        <p class="step__subtitle">Importante para el stack de drivers del script.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="nvidia">
+            <span class="option-btn__label">NVIDIA</span>
+            <span class="option-btn__desc">RTX, GTX — drivers propietarios o nouveau.</span>
+          </button>
+          <button class="option-btn" data-value="amd">
+            <span class="option-btn__label">AMD</span>
+            <span class="option-btn__desc">Radeon RX — drivers amdgpu open-source.</span>
+          </button>
+          <button class="option-btn" data-value="intel">
+            <span class="option-btn__label">Intel integrada</span>
+            <span class="option-btn__desc">Iris Xe o UHD — sin GPU dedicada.</span>
+          </button>
+          <button class="option-btn" data-value="nosé">
+            <span class="option-btn__label">No lo sé</span>
+            <span class="option-btn__desc">El sistema detectará el hardware automáticamente.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-3" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-3" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-4">
+        <div class="step__eyebrow">step 04 / 05</div>
+        <h2 class="step__title">¿Cuánta RAM tiene tu equipo?</h2>
+        <p class="step__subtitle">Esto afecta la elección del entorno gráfico y swap.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="4gb">
+            <span class="option-btn__label">4 GB o menos</span>
+            <span class="option-btn__desc">Entorno ligero recomendado: XFCE, LXQt.</span>
+          </button>
+          <button class="option-btn" data-value="8gb">
+            <span class="option-btn__label">8 GB</span>
+            <span class="option-btn__desc">Buen balance: GNOME, KDE Plasma sin problema.</span>
+          </button>
+          <button class="option-btn" data-value="16gb">
+            <span class="option-btn__label">16 GB</span>
+            <span class="option-btn__desc">Cualquier entorno + Docker + múltiples procesos.</span>
+          </button>
+          <button class="option-btn" data-value="32gb+">
+            <span class="option-btn__label">32 GB o más</span>
+            <span class="option-btn__desc">Sin límites — VMs, compilaciones pesadas.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-4" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-4" aria-label="Siguiente paso">
+            Siguiente
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="step" id="step-5">
+        <div class="step__eyebrow">step 05 / 05</div>
+        <h2 class="step__title">¿Qué tan dispuesto estás a configurar cosas manualmente?</h2>
+        <p class="step__subtitle">Esto determina si el script es conservador o completo.</p>
+        <div class="option-grid">
+          <button class="option-btn" data-value="cero">
+            <span class="option-btn__label">Nada</span>
+            <span class="option-btn__desc">Quiero que todo funcione sin tocar nada más.</span>
+          </button>
+          <button class="option-btn" data-value="poco">
+            <span class="option-btn__label">Un poco</span>
+            <span class="option-btn__desc">Puedo seguir instrucciones simples si es necesario.</span>
+          </button>
+          <button class="option-btn" data-value="bastante">
+            <span class="option-btn__label">Bastante</span>
+            <span class="option-btn__desc">Me gusta entender lo que instalo y cómo funciona.</span>
+          </button>
+          <button class="option-btn" data-value="total">
+            <span class="option-btn__label">Control total</span>
+            <span class="option-btn__desc">Prefiero el script sin opiniones, yo elijo cada detalle.</span>
+          </button>
+        </div>
+        <div class="step-nav">
+          <button class="btn-nav btn-nav--back" id="btn-back-5" aria-label="Paso anterior">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M6.854 3.146a.5.5 0 0 1 0 .708L3.707 7H12.5a.5.5 0 0 1 0 1H3.707l3.147 3.146a.5.5 0 0 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 0 1 .708 0Z" fill="currentColor"/></svg>
+            Volver
+          </button>
+          <button class="btn-nav btn-nav--next" id="btn-next-5" aria-label="Generar mi setup">
+            Generar mi setup
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M8.146 3.146a.5.5 0 0 1 .708 0l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L11.293 8H2.5a.5.5 0 0 1 0-1h8.793L8.146 3.854a.5.5 0 0 1 0-.708Z" fill="currentColor"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const TOTAL_STEPS = 5;
+    let currentStep = 1;
+    const answers = {};
+
+    const progressFill = document.getElementById('progress-fill');
+    const progressLabel = document.getElementById('progress-label');
+
+    function showStep(n) {
+      document.querySelectorAll('.step').forEach((el) => el.classList.remove('is-active'));
+      document.getElementById('step-' + n).classList.add('is-active');
+      progressFill.style.width = (n / TOTAL_STEPS * 100) + '%';
+      progressLabel.textContent = 'Paso ' + n + ' de ' + TOTAL_STEPS;
+      currentStep = n;
+    }
+
+    document.querySelectorAll('[id^="btn-next-"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const stepEl = btn.closest('.step');
+        const selected = stepEl.querySelector('.option-btn.is-selected');
+        if (!selected) {
+          const firstOption = stepEl.querySelector('.option-btn');
+          if (firstOption) firstOption.classList.add('is-selected');
+        }
+        if (currentStep < TOTAL_STEPS) {
+          showStep(currentStep + 1);
+        }
+      });
+    });
+
+    document.querySelectorAll('[id^="btn-back-"]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (currentStep > 1) showStep(currentStep - 1);
+      });
+    });
+
+    document.querySelectorAll('.option-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const siblings = btn.closest('.option-grid').querySelectorAll('.option-btn');
+        siblings.forEach((s) => s.classList.remove('is-selected'));
+        btn.classList.add('is-selected');
+        answers['step' + currentStep] = btn.dataset.value;
+      });
+    });
+  </script>
+
+</body>
+</html>
