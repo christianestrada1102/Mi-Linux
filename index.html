@@ -22,25 +22,24 @@
 </head>
 <body>
 
-  <nav class="navbar" id="navbar">
-    <a href="#top" class="navbar__logo">
+  <nav class="navbar" id="navbar" aria-label="Navegación principal">
+    <a class="navbar__logo" href="#top">
       <span class="navbar__logo-text">Mi Linux</span>
       <span class="navbar__dot"></span>
     </a>
     <div class="navbar__links-inner navbar__links">
-      <a href="#como-funciona" class="navbar__link">Cómo funciona</a>
-      <a href="#para-quien" class="navbar__link">Para quién</a>
-      <a href="#roadmap" class="navbar__link">Roadmap</a>
+      <a class="navbar__link" href="#como-funciona">Cómo funciona</a>
+      <a class="navbar__link" href="#para-quien">Para quién</a>
+      <a class="navbar__link" href="#roadmap">Roadmap</a>
     </div>
     <div class="navbar__cta-wrap">
-      <a href="#cta-final" class="pill-link">Crear mi setup</a>
+      <a class="pill-link" href="#cta-final">Crear mi setup</a>
     </div>
   </nav>
 
   <main>
 
-    <!-- HERO -->
-    <section id="top" class="hero">
+    <section class="hero" id="top" aria-label="Hero">
       <div class="container">
         <div class="hero__text">
           <div class="hero__eyebrow">
@@ -49,8 +48,8 @@
           <h1>Tu setup Linux, generado a tu <em class="italic-accent">medida</em>.</h1>
           <p class="hero__subhead">Toma tu perfil, tu hardware y tu forma de trabajar. Devuelve un script post-instalación, revisable, tuyo.</p>
           <div class="hero__actions">
-            <a href="#cta-final" class="btn-primary">Crear mi setup <span aria-hidden="true">→</span></a>
-            <a href="#preview" class="btn-ghost">Ver ejemplo de setup</a>
+            <a class="btn-primary" href="#cta-final">Crear mi setup <span aria-hidden="true">→</span></a>
+            <a class="btn-ghost" href="#preview">Ver ejemplo de setup</a>
           </div>
           <div class="hero__compat">
             <span>Compatible con Arch</span>
@@ -68,8 +67,7 @@
       </div>
     </section>
 
-    <!-- PROBLEMA -->
-    <section id="problema" class="section section--lg">
+    <section class="section section--lg" id="problema" aria-label="El problema">
       <div class="container">
         <div class="eyebrow"><span class="section-number">[ 01 ]</span> El problema</div>
         <h2 class="fade-up">Linux no es difícil.<br><span class="italic-muted">El proceso inicial, sí.</span></h2>
@@ -111,8 +109,7 @@
       </div>
     </section>
 
-    <!-- SOLUCION -->
-    <section id="solucion" class="section">
+    <section class="section" id="solucion" aria-label="La solución">
       <div class="container">
         <div class="eyebrow"><span class="section-number">[ 02 ]</span> La solución</div>
         <h2 class="fade-up">Mi Linux convierte tus necesidades en un <span class="italic-accent">setup listo.</span></h2>
@@ -146,8 +143,7 @@
       </div>
     </section>
 
-    <!-- COMO FUNCIONA -->
-    <section id="como-funciona" class="section section--lg">
+    <section class="section section--lg" id="como-funciona" aria-label="Cómo funciona">
       <div class="container">
         <div class="section-intro">
           <div class="eyebrow"><span class="section-number">[ 03 ]</span> Cómo funciona</div>
@@ -192,8 +188,7 @@
       </div>
     </section>
 
-    <!-- PARA QUIEN -->
-    <section id="para-quien" class="section section--lg">
+    <section class="section section--lg" id="para-quien" aria-label="Para quién">
       <div class="container">
         <div class="eyebrow"><span class="section-number">[ 04 ]</span> Para quién</div>
         <h2 class="fade-up">Cuatro perfiles. Una sola <em class="italic-accent">forma</em> <em class="italic-accent">de empezar.</em></h2>
@@ -252,8 +247,7 @@
       </div>
     </section>
 
-    <!-- PREVIEW -->
-    <section id="preview" class="section section--lg preview-section">
+    <section class="section section--lg preview-section" id="preview" aria-label="Preview del setup generado">
       <div class="container">
         <div class="eyebrow"><span class="section-number">[ 05 ]</span> Preview</div>
         <h2 class="fade-up">Así se ve un <span class="italic-accent">setup generado.</span></h2>
@@ -355,8 +349,7 @@
       </div>
     </section>
 
-    <!-- SEGURIDAD -->
-    <section id="seguridad" class="section">
+    <section class="section" id="seguridad" aria-label="Seguridad y control">
       <div class="container">
         <div class="security-layout">
           <div class="security-intro">
@@ -390,8 +383,7 @@
       </div>
     </section>
 
-    <!-- ROADMAP -->
-    <section id="roadmap" class="section section--lg">
+    <section class="section section--lg" id="roadmap" aria-label="Roadmap">
       <div class="container">
         <div class="eyebrow"><span class="section-number">[ 07 ]</span> Roadmap</div>
         <h2 class="fade-up">Tu entorno, <span class="italic-muted">en constante evolución.</span></h2>
@@ -443,8 +435,7 @@
       </div>
     </section>
 
-    <!-- CTA FINAL -->
-    <section id="cta-final" class="cta-final">
+    <section class="cta-final" id="cta-final" aria-label="Llamada a la acción">
       <div class="cta-final__bg">
         <img src="assets/images/devs-coding.jpg" alt="Dos personas trabajando en laptops una al lado de la otra" loading="lazy" width="1448" height="1086">
         <div class="cta-final__overlay"></div>
@@ -453,7 +444,7 @@
         <div class="cta-final__eyebrow"><span></span> Ready to start → <span></span></div>
         <h2>Menos comandos al azar.</h2>
         <p class="cta-final__sub">Más control sobre tu sistema.</p>
-        <a href="#top" class="btn-primary">Crear mi setup <span aria-hidden="true">→</span></a>
+        <a class="btn-primary" href="#top">Crear mi setup <span aria-hidden="true">→</span></a>
         <div class="cta-final__note">Sin cuenta · Sin tarjeta · Sin descargas hasta que tú decidas</div>
       </div>
     </section>
@@ -462,17 +453,17 @@
 
   <footer>
     <div class="container footer__row">
-      <a href="#top" class="navbar__logo">
+      <a class="navbar__logo" href="#top">
         <span class="navbar__logo-text">Mi Linux</span>
         <span class="navbar__dot"></span>
       </a>
-      <nav class="footer__links">
+      <nav class="footer__links" aria-label="Navegación del pie de página">
         <a href="#como-funciona">Cómo funciona</a>
         <a href="#roadmap">Roadmap</a>
         <a href="#seguridad">Seguridad</a>
         <a href="#">GitHub</a>
       </nav>
-      <span class="footer__copy">© 2026 Mi Linux · hecho por <a href="https://www.codebynas.dev/" target="_blank" rel="noopener" class="footer__credit">CodeByNas</a></span>
+      <span class="footer__copy">© 2026 Mi Linux · hecho por <a class="footer__credit" href="https://www.codebynas.dev/" target="_blank" rel="noopener">CodeByNas</a></span>
     </div>
   </footer>
 
