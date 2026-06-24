@@ -6,17 +6,24 @@
 }
 
 .navbar {
-  position: sticky;
+  position: fixed !important;
   top: 0;
-  z-index: 100;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 18px var(--container-pad);
-  background: rgba(11, 11, 13, 0.7);
+  background-color: #0f0f11;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar + * {
+  padding-top: 70px;
 }
 
 .navbar__logo {
