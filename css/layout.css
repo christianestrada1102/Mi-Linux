@@ -42,17 +42,10 @@
 }
 
 .navbar__logo-img {
-  width: 28px;
-  height: 28px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   display: block;
-}
-
-.navbar__dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--color-accent);
 }
 
 .navbar__links {
