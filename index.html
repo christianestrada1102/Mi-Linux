@@ -48,7 +48,7 @@
           <h1>Tu setup Linux, generado a tu <em class="italic-accent">medida</em>.</h1>
           <p class="hero__subhead">Toma tu perfil, tu hardware y tu forma de trabajar. Devuelve un script post-instalación, revisable, tuyo.</p>
           <div class="hero__actions">
-            <a class="btn-primary" href="#cta-final">Crear mi setup <span>→</span></a>
+            <a class="btn-primary" href="#cta-final">Crear mi setup <span aria-hidden="true">→</span></a>
             <a class="btn-ghost" href="#preview">Ver ejemplo de setup</a>
           </div>
           <div class="hero__compat">
@@ -60,7 +60,7 @@
           </div>
         </div>
         <div class="media-frame hero__media">
-          <img src="assets/images/hero-distros.jpg" alt="Grid de distros Linux en pantalla de laptop" width="640" height="800">
+          <img src="assets/images/hero-distros.jpg" alt="Grid de distros Linux en pantalla de laptop" width="1448" height="1086">
           <span class="float-badge float-badge--top-left">Empezando con Arch · CachyOS</span>
           <span class="float-badge float-badge--bottom-right">v0.1 — MVP en construcción</span>
         </div>
@@ -74,11 +74,11 @@
 
         <div class="problem-images fade-up">
           <figure>
-            <img src="assets/images/bsod-punch.jpg" alt="Pantalla azul de la muerte con un puño cerrado frente a ella" loading="lazy" width="800" height="500">
+            <img src="assets/images/bsod-punch.jpg" alt="Pantalla azul de la muerte con un puño cerrado frente a ella" loading="lazy" width="1448" height="1086">
             <figcaption>— Windows. Otra vez.</figcaption>
           </figure>
           <figure>
-            <img src="assets/images/terminal-errors.jpg" alt="Terminal Linux con cascada de errores de mirror" loading="lazy" width="800" height="500">
+            <img src="assets/images/terminal-errors.jpg" alt="Terminal Linux con cascada de errores de mirror" loading="lazy" width="1448" height="1086">
             <figcaption>— pacman -Syu, día uno</figcaption>
           </figure>
         </div>
@@ -181,7 +181,7 @@
         </div>
 
         <div class="media-frame section-banner fade-up">
-          <img src="assets/images/usb-terminal.jpg" alt="USB Kingston frente a laptop con terminal en pantalla" loading="lazy" width="2100" height="900">
+          <img src="assets/images/usb-terminal.jpg" alt="USB Kingston frente a laptop con terminal en pantalla" loading="lazy" width="1448" height="1086">
           <span class="caption">./mi-linux-setup.sh — listo en USB</span>
         </div>
         <p class="section-banner__note">El script generado pesa entre 4 y 8 KB. Tú decides cuándo y dónde ejecutarlo.</p>
@@ -241,7 +241,7 @@
         </div>
 
         <div class="media-frame section-banner fade-up">
-          <img src="assets/images/arch-fastfetch.jpg" alt="Persona frente a laptop con Arch Linux fastfetch en pantalla" loading="lazy" width="2100" height="900">
+          <img src="assets/images/arch-fastfetch.jpg" alt="Persona frente a laptop con Arch Linux fastfetch en pantalla" loading="lazy" width="1448" height="1086">
           <span class="caption">fastfetch · arch linux · día 47</span>
         </div>
       </div>
@@ -256,7 +256,10 @@
           <div class="preview-card__header">
             <div class="preview-card__dots">
               <span></span><span></span><span></span>
-              <span class="preview-card__path">mi-linux.app / setup / preview</span>
+              <pre class="preview-card__path">mi-linux.app/
+├── setup
+│   └── preview
+└── — Perfil del usuario</pre>
             </div>
             <span class="preview-card__status">● Listo para descargar</span>
           </div>
@@ -264,7 +267,7 @@
           <div class="preview-card__body">
             <aside class="preview-aside">
               <div class="preview-aside__label">— Perfil del usuario</div>
-              <h3>irene</h3>
+              <h3 class="preview-aside__name">irene</h3>
               <p class="preview-aside__sub">developer · uso diario · gaming ocasional</p>
 
               <div class="preview-aside__tags">
@@ -281,18 +284,29 @@
                 <div class="spec-row"><span>Compositor</span><span>hyprland</span></div>
                 <div class="spec-row"><span>Shell</span><span>fish</span></div>
                 <div class="spec-row"><span>Paquetes base</span><span>142</span></div>
-                <div class="spec-row"><span>Tamaño script</span><span style="color:var(--color-accent);">4.7 KB</span></div>
+                <div class="spec-row"><span>Tamaño script</span><span class="spec-row__accent">4.7 KB</span></div>
               </div>
             </aside>
 
             <div class="preview-code">
               <div class="preview-code__tabs">
-                <div class="preview-code__tab-list">
-                  <span>setup.sh</span>
-                  <span>postinstall.fish</span>
-                  <span>dotfiles.tar</span>
+                <div class="preview-file-tree">
+                  <div class="file-tree__root">linux-setup-app/</div>
+                  <div class="file-tree__item file-tree__item--active">
+                    <span class="file-tree__glyph">├──</span>
+                    <span class="file-tree__name">setup.sh</span>
+                    <span class="file-tree__marker">← active</span>
+                  </div>
+                  <div class="file-tree__item">
+                    <span class="file-tree__glyph">├──</span>
+                    <span class="file-tree__name">postinstall.fish</span>
+                  </div>
+                  <div class="file-tree__item">
+                    <span class="file-tree__glyph">└──</span>
+                    <span class="file-tree__name">dotfiles.tar</span>
+                  </div>
                 </div>
-                <button class="btn-primary" style="padding:7px 14px;font-size:11px;">↓ Descargar .sh</button>
+                <button class="btn-primary" style="padding:7px 14px;font-size:11px;align-self:flex-start;">↓ Descargar .sh</button>
               </div>
               <pre><code><span class="cm"># --- setup.sh ----------------------------------</span>
 <span class="cm"># generated for: irene · arch · hyprland · gaming</span>
@@ -372,7 +386,7 @@
     <section class="section section--lg" id="roadmap" aria-label="Roadmap">
       <div class="container">
         <div class="eyebrow"><span class="section-number">[ 07 ]</span> Roadmap</div>
-        <h2 class="fade-up">Hoy, mañana, <span class="italic-muted">después.</span></h2>
+        <h2 class="fade-up">Tu entorno, <span class="italic-muted">en constante evolución.</span></h2>
 
         <div class="roadmap-grid fade-up">
           <div class="roadmap-col">
@@ -381,9 +395,9 @@
               <span class="badge badge-accent">Disponible ahora</span>
             </div>
             <div class="roadmap-col__version">v0.1 — MVP actual</div>
-            <h3>Generador y revisión</h3>
+            <h3>Generación y Post-instalación</h3>
             <ul>
-              <li><span>✓</span> Cuestionario guiado de perfil</li>
+              <li><span>✓</span> Cuestionario guiado por IA</li>
               <li><span>✓</span> MVP CachyOS / Arch</li>
               <li><span>✓</span> Script bash descargable</li>
               <li><span>✓</span> Preview en navegador</li>
@@ -399,7 +413,7 @@
             <ul>
               <li><span>○</span> Soporte Ubuntu / Fedora</li>
               <li><span>○</span> Perfiles guardados</li>
-              <li><span>○</span> Modo avanzado</li>
+              <li><span>○</span> Modo de configuración avanzado</li>
               <li><span>○</span> Diff entre dos perfiles</li>
             </ul>
           </div>
@@ -412,9 +426,9 @@
             <h3>Ecosistema</h3>
             <ul>
               <li><span>·</span> Cuentas de usuario</li>
-              <li><span>·</span> Biblioteca de presets</li>
+              <li><span>·</span> Biblioteca de presets comunitarios</li>
               <li><span>·</span> Integración con dotfiles / GitHub</li>
-              <li><span>·</span> Sync de perfil entre máquinas</li>
+              <li><span>·</span> Sincronización entre máquinas</li>
             </ul>
           </div>
         </div>
@@ -423,14 +437,14 @@
 
     <section class="cta-final" id="cta-final" aria-label="Llamada a la acción">
       <div class="cta-final__bg">
-        <img src="assets/images/devs-coding.jpg" alt="Dos personas trabajando en laptops una al lado de la otra" loading="lazy" width="1920" height="1080">
+        <img src="assets/images/devs-coding.jpg" alt="Dos personas trabajando en laptops una al lado de la otra" loading="lazy" width="1448" height="1086">
         <div class="cta-final__overlay"></div>
       </div>
       <div class="container cta-final__content">
         <div class="cta-final__eyebrow"><span></span> Ready to start → <span></span></div>
         <h2>Menos comandos al azar.</h2>
         <p class="cta-final__sub">Más control sobre tu sistema.</p>
-        <a class="btn-primary" href="#top">Crear mi setup <span>→</span></a>
+        <a class="btn-primary" href="#top">Crear mi setup <span aria-hidden="true">→</span></a>
         <div class="cta-final__note">Sin cuenta · Sin tarjeta · Sin descargas hasta que tú decidas</div>
       </div>
     </section>
@@ -453,6 +467,5 @@
     </div>
   </footer>
 
-  <script src="js/main.js" defer></script>
 </body>
 </html>
