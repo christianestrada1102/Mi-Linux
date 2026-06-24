@@ -33,12 +33,6 @@
   color: #C5CAD8;
 }
 
-.hero__eyebrow-divider {
-  width: 24px;
-  height: 1px;
-  background: var(--color-muted);
-}
-
 .hero__eyebrow span:last-child {
   font-family: var(--font-mono);
   font-size: 11px;
@@ -99,10 +93,6 @@
 
 .section--lg {
   padding: var(--space-32) 0;
-}
-
-.section__eyebrow {
-  margin-bottom: var(--space-12);
 }
 
 .section h2 {
@@ -858,10 +848,6 @@
     margin-top: 8px;
   }
 
-  .footer__bottom {
-    flex-direction: column;
-    align-items: flex-start;
-  }
 }
 
 @media (max-width: 640px) {
