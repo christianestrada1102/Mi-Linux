@@ -2,9 +2,6 @@
 
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const H1_WORDS = [
   { text: 'Tu', italic: false },
@@ -16,6 +13,15 @@ const H1_WORDS = [
   { text: 'medida.', italic: true },
 ]
 
+const TERMINAL_LINES = [
+  { color: '#474A56', text: '# Mi Linux — agente de configuración' },
+  { color: '#929AAB', prefix: 'Agente:', text: '¿Para qué vas a usar Linux?' },
+  { color: '#929AAB', prefix: 'Tú:', text: 'Para desarrollo web y algo de gaming' },
+  { color: '#929AAB', prefix: 'Agente:', text: '¿Tienes GPU Nvidia o AMD?' },
+  { color: '#D3D5FD', prefix: 'Tú:', text: 'Nvidia RTX 3060' },
+  { color: '#929AAB', prefix: 'Agente:', text: 'Recomiendo CachyOS con kernel-cachyos...' },
+]
+
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
   const eyebrowRef = useRef<HTMLDivElement>(null)
@@ -23,9 +29,7 @@ export default function Hero() {
   const subheadRef = useRef<HTMLParagraphElement>(null)
   const ctasRef = useRef<HTMLDivElement>(null)
   const techLineRef = useRef<HTMLDivElement>(null)
-  const imageRef = useRef<HTMLImageElement>(null)
-  const badgeTopRef = useRef<HTMLDivElement>(null)
-  const badgeBottomRef = useRef<HTMLDivElement>(null)
+  const terminalRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const words = h1Ref.current?.querySelectorAll<HTMLElement>('.word-inner')
@@ -50,31 +54,11 @@ export default function Hero() {
     tl.from(subheadRef.current, { opacity: 0, y: 16, duration: 0.6 }, '-=0.4')
       .from(ctasRef.current, { opacity: 0, y: 12, duration: 0.6 }, '-=0.3')
       .from(techLineRef.current, { opacity: 0, duration: 0.5 }, '-=0.3')
-      .from(badgeTopRef.current, { opacity: 0, duration: 0.5 }, '-=0.3')
-      .from(badgeBottomRef.current, { opacity: 0, duration: 0.5 }, '-=0.2')
+      .from(terminalRef.current, { opacity: 0, y: 16, duration: 0.7 }, '-=0.4')
 
     return () => {
       tl.kill()
     }
-  }, [])
-
-  useEffect(() => {
-    if (!imageRef.current || !sectionRef.current) return
-
-    const ctx = gsap.context(() => {
-      gsap.to(imageRef.current, {
-        y: -60,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
-        },
-      })
-    }, sectionRef)
-
-    return () => ctx.revert()
   }, [])
 
   return (
@@ -153,30 +137,28 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Columna derecha — imagen */}
+        {/* Columna derecha — terminal mockup */}
         <div
-          className="relative overflow-hidden rounded-xl border border-[#1F1F26] aspect-[16/10] md:aspect-[3/4]"
+          ref={terminalRef}
+          className="rounded-xl border border-[#1F1F26] bg-[#111114] p-6 font-mono text-[13px] leading-relaxed"
         >
-          <img
-            ref={imageRef}
-            src="/images/hero-distros.jpg"
-            alt="Distribuciones Linux"
-            className="w-full h-full object-cover"
-            style={{ filter: 'brightness(0.55) contrast(1.1)' }}
-          />
-
-          <div
-            ref={badgeTopRef}
-            className="absolute top-0 left-0 m-5 rounded-md border border-[#2A2A33] bg-[rgba(11,11,13,0.85)] backdrop-blur-[8px] px-3.5 py-2 font-mono text-[11px] text-[#929AAB]"
-          >
-            Empezando con Arch · CachyOS
+          <div className="flex items-center gap-4 mb-5">
+            <div className="flex items-center gap-1.5">
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FF5F56]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#27C93F]" />
+            </div>
+            <span className="text-[11px] text-[#474A56]">mi-linux — agente</span>
           </div>
 
-          <div
-            ref={badgeBottomRef}
-            className="absolute bottom-0 right-0 m-5 rounded-md border border-[#2A2A33] bg-[rgba(11,11,13,0.85)] backdrop-blur-[8px] px-3.5 py-2 font-mono text-[11px] text-[#929AAB]"
-          >
-            v0.1 — En construcción
+          <div className="flex flex-col gap-2.5">
+            {TERMINAL_LINES.map((line, i) => (
+              <div key={i} style={{ color: line.color }}>
+                {line.prefix && <span className="font-medium">{line.prefix} </span>}
+                {line.text}
+              </div>
+            ))}
+            <span className="text-[#F5F5F7] animate-pulse">█</span>
           </div>
         </div>
       </div>

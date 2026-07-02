@@ -39,7 +39,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Mi Linux — Tu setup Linux, generado a tu medida',
     description: 'Agente IA que configura Linux a tu medida.',
-    images: ['/images/hero-distros.jpg'],
+    images: ['/images/MiLinux_favicon_variacion4.png'],
+  },
+  icons: {
+    icon: '/images/faviconn.svg',
+    apple: '/images/MiLinux_favicon_variacion4.png',
   },
 }
 
