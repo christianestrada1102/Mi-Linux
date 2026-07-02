@@ -12,7 +12,8 @@ import ScrollIndicator from './hero/ScrollIndicator'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Título en dos líneas — el protagonista de la composición.
+// Título en dos líneas. El espacio va DENTRO del span animado (&nbsp;)
+// para que el split por palabras no se coma los espacios.
 const H1_LINES: { text: string; italic?: boolean }[][] = [
   [{ text: 'Tu' }, { text: 'setup' }, { text: 'Linux,' }],
   [{ text: 'generado' }, { text: 'a' }, { text: 'tu' }, { text: 'medida.', italic: true }],
@@ -64,88 +65,82 @@ export default function Hero() {
   }, [])
 
   return (
-    <section
-      ref={sectionRef}
-      className="relative flex min-h-svh items-center overflow-hidden pb-28 pt-32 md:pt-36"
-    >
+    <section ref={sectionRef} className="relative min-h-screen w-full overflow-hidden">
       {/* CAPA 0 — fondo: grid + gradiente radial */}
       <GridBackground />
 
-      {/* CAPA 1 — glifo gigante a la derecha, detrás de las cajas */}
+      {/* CAPA 1 — glifo gigante detrás de la columna derecha */}
       <GiantGlyph />
 
-      {/* Grid editorial de 10 columnas — texto izquierda, apoyo derecha */}
-      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 gap-y-12 px-6 md:px-12 lg:grid-cols-10 lg:gap-x-8">
-        {/* Columnas 1–6 — eyebrow, título, subhead, CTAs */}
-        <div className="lg:col-span-6">
-          <div
-            ref={eyebrowRef}
-            className="mb-8 font-mono text-[11px] uppercase tracking-[0.22em] text-[#929AAB]"
-          >
-            Linux Setup Generator · 2026
-          </div>
+      {/* Contenedor — nunca pegado al borde del viewport */}
+      <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-7xl items-center px-6 md:px-12">
+        <div className="grid w-full grid-cols-1 gap-8 pb-16 pt-24 lg:grid-cols-12">
+          {/* Columnas 1–7 — eyebrow, título, subhead, CTAs */}
+          <div className="flex flex-col justify-center lg:col-span-7">
+            <div
+              ref={eyebrowRef}
+              className="mb-8 font-mono text-[11px] uppercase tracking-[0.22em] text-[#929AAB]"
+            >
+              Linux Setup Generator · 2026
+            </div>
 
-          <h1
-            ref={h1Ref}
-            className="font-display font-thin leading-[0.92] text-[#F5F5F7] text-[length:clamp(48px,9vw,130px)]"
-          >
-            {H1_LINES.map((line, li) => (
-              <span key={li} className="block">
-                {line.map((word, wi) => (
-                  <span
-                    key={wi}
-                    className={`inline-block overflow-hidden align-top ${
-                      wi === line.length - 1 ? '' : 'mr-[0.22em]'
-                    }`}
-                  >
-                    <span
-                      className={`word-inner inline-block ${
-                        word.italic ? 'italic text-[#D3D5FD]' : ''
-                      }`}
-                    >
-                      {word.text}
+            <h1
+              ref={h1Ref}
+              className="font-display font-thin leading-[0.92] text-[#F5F5F7] text-[length:clamp(48px,9vw,130px)]"
+            >
+              {H1_LINES.map((line, li) => (
+                <span key={li} className="block">
+                  {line.map((word, wi) => (
+                    <span key={wi} className="inline-block overflow-hidden align-top">
+                      <span
+                        className={`word-inner inline-block ${
+                          word.italic ? 'italic text-[#D3D5FD]' : ''
+                        }`}
+                      >
+                        {word.text}
+                        {wi < line.length - 1 && ' '}
+                      </span>
                     </span>
-                  </span>
-                ))}
-              </span>
-            ))}
-          </h1>
+                  ))}
+                </span>
+              ))}
+            </h1>
 
-          <p
-            ref={subheadRef}
-            className="mt-10 max-w-md font-sans text-base font-light leading-relaxed text-[#929AAB]"
-          >
-            Habla con el agente, describe cómo usas tu sistema y recibe una
-            configuración Linux con script post-instalación revisable.
-          </p>
+            <p
+              ref={subheadRef}
+              className="mt-10 max-w-md font-sans text-base font-light leading-relaxed text-[#929AAB]"
+            >
+              Habla con el agente, describe cómo usas tu sistema y recibe una
+              configuración Linux con script post-instalación revisable.
+            </p>
 
-          <div ref={ctasRef} className="mt-8 flex items-center gap-5">
-            <a
-              href="/setup"
-              className="btn h-auto min-h-0 rounded-md border-none bg-[#F5F5F7] px-7 py-3.5 text-sm font-normal text-[#0B0B0D] shadow-none transition-colors duration-200 hover:bg-[#D3D5FD]"
-            >
-              Crear mi setup →
-            </a>
-            <a
-              href="#preview"
-              className="text-sm text-[#929AAB] underline-offset-4 transition-colors duration-200 hover:text-[#F5F5F7] hover:underline"
-            >
-              Ver ejemplo →
-            </a>
+            <div ref={ctasRef} className="mt-8 flex items-center gap-5">
+              <a
+                href="/setup"
+                className="btn h-auto min-h-0 rounded-md border-none bg-[#F5F5F7] px-7 py-3.5 text-sm font-normal text-[#0B0B0D] shadow-none transition-colors duration-200 hover:bg-[#D3D5FD]"
+              >
+                Crear mi setup →
+              </a>
+              <a
+                href="#preview"
+                className="text-sm text-[#929AAB] underline-offset-4 transition-colors duration-200 hover:text-[#F5F5F7] hover:underline"
+              >
+                Ver ejemplo →
+              </a>
+            </div>
           </div>
-        </div>
 
-        {/* Columnas 7–10 — cajas flotantes en el espacio negativo derecho.
-            Arrancan más abajo que la línea ancha del título para no chocar. */}
-        <div className="flex flex-col items-start gap-5 lg:col-span-4 lg:items-end lg:pt-28">
-          <FloatingCard delay={0.9} parallax={40} className="w-full max-w-[380px]">
-            <TerminalPreview />
-          </FloatingCard>
+          {/* Columnas 8–12 — cajas centradas verticalmente, gap consistente */}
+          <div className="relative flex flex-col justify-center gap-6 lg:col-span-5">
+            <FloatingCard delay={0.9} parallax={40} className="w-full max-w-[380px] lg:ml-auto">
+              <TerminalPreview />
+            </FloatingCard>
 
-          {/* Badge con offset izquierdo respecto a la terminal */}
-          <FloatingCard delay={1.15} parallax={60} className="lg:mr-24">
-            <StatusBadge />
-          </FloatingCard>
+            {/* Badge con offset izquierdo respecto a la terminal */}
+            <FloatingCard delay={1.15} parallax={60} className="self-start lg:self-end lg:mr-28">
+              <StatusBadge />
+            </FloatingCard>
+          </div>
         </div>
       </div>
 
