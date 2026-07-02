@@ -87,7 +87,7 @@ export default function Hero() {
 
           <h1
             ref={h1Ref}
-            className="font-[family-name:var(--font-dxgaster)] font-thin leading-[0.92] text-[#F5F5F7] text-[clamp(48px,9vw,130px)]"
+            className="font-display font-thin leading-[0.92] text-[#F5F5F7] text-[length:clamp(48px,9vw,130px)]"
           >
             {H1_LINES.map((line, li) => (
               <span key={li} className="block">

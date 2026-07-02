@@ -40,7 +40,7 @@ export default function GiantGlyph() {
       aria-hidden
       className="pointer-events-none absolute -right-[8%] top-1/2 -translate-y-1/2 select-none lg:-right-[4%]"
     >
-      <span className="block -rotate-[8deg] font-[family-name:var(--font-dxgaster)] font-thin leading-none text-[#16161A] text-[clamp(280px,42vw,700px)]">
+      <span className="block -rotate-[8deg] font-display font-thin leading-none text-[#16161A] text-[length:clamp(280px,42vw,700px)]">
         &gt;
       </span>
     </div>
