@@ -1,0 +1,106 @@
+@import "tailwindcss";
+
+@plugin "daisyui" {
+  themes: false;
+}
+
+@font-face {
+  font-family: 'DxGaster';
+  src: url('/fonts/DxGaster-Thin.otf') format('opentype');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'DxGaster';
+  src: url('/fonts/DxGaster-ThinItalic.otf') format('opentype');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@theme inline {
+  /* Colores */
+  --color-bg:        #0B0B0D;
+  --color-surface:   #111114;
+  --color-elevated:  #16161A;
+  --color-border:    #1F1F26;
+  --color-border-2:  #2A2A33;
+  --color-muted:     #474A56;
+  --color-text-2:    #929AAB;
+  --color-text:      #F5F5F7;
+  --color-accent:    #D3D5FD;
+  --color-accent-2:  #8B8FE0;
+
+  /* Tipografia */
+  --font-display: 'DxGaster', Georgia, serif;
+  --font-sans:    'Inter', system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', Menlo, monospace;
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* Reset base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: #0B0B0D;
+  color: #F5F5F7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: #0B0B0D;
+  color: #F5F5F7;
+  overflow-x: hidden;
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* Utilidades base */
+.font-display { font-family: var(--font-display); font-weight: 100; }
+.font-mono    { font-family: var(--font-mono); }
+.text-accent  { color: var(--color-accent); }
+.text-muted   { color: var(--color-text-2); }
+.text-dim     { color: var(--color-muted); }
+
+/* Animaciones de entrada — controladas por GSAP */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+}
+
+.fade-in {
+  opacity: 0;
+}
+
+.split-word {
+  display: inline-block;
+  overflow: hidden;
+}
+
+.split-word span {
+  display: inline-block;
+  transform: translateY(105%);
+}
