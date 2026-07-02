@@ -6,27 +6,16 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import GridBackground from './hero/GridBackground'
 import GiantGlyph from './hero/GiantGlyph'
 import FloatingCard from './hero/FloatingCard'
+import TerminalPreview from './hero/TerminalPreview'
+import StatusBadge from './hero/StatusBadge'
 import ScrollIndicator from './hero/ScrollIndicator'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const H1_WORDS = [
-  { text: 'Tu', italic: false },
-  { text: 'setup', italic: false },
-  { text: 'Linux,', italic: false },
-  { text: 'generado', italic: false },
-  { text: 'a', italic: false },
-  { text: 'tu', italic: false },
-  { text: 'medida.', italic: true },
-]
-
-const TERMINAL_LINES = [
-  { color: '#474A56', text: '# agente de configuración' },
-  { color: '#929AAB', prefix: 'Agente:', text: '¿Para qué vas a usar Linux?' },
-  { color: '#929AAB', prefix: 'Tú:', text: 'Dev web y algo de gaming' },
-  { color: '#929AAB', prefix: 'Agente:', text: '¿GPU Nvidia o AMD?' },
-  { color: '#D3D5FD', prefix: 'Tú:', text: 'Nvidia RTX 3060' },
-  { color: '#929AAB', prefix: 'Agente:', text: 'Recomiendo CachyOS…' },
+// Título en dos líneas — el protagonista de la composición.
+const H1_LINES: { text: string; italic?: boolean }[][] = [
+  [{ text: 'Tu' }, { text: 'setup' }, { text: 'Linux,' }],
+  [{ text: 'generado' }, { text: 'a' }, { text: 'tu' }, { text: 'medida.', italic: true }],
 ]
 
 export default function Hero() {
@@ -41,7 +30,6 @@ export default function Hero() {
     const words = h1Ref.current?.querySelectorAll<HTMLElement>('.word-inner')
 
     const ctx = gsap.context(() => {
-      // Entrada orquestada del contenido principal.
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' }, delay: 0.35 })
 
       tl.from(eyebrowRef.current, { opacity: 0, y: 12, duration: 0.6 })
@@ -49,12 +37,7 @@ export default function Hero() {
       if (words?.length) {
         tl.from(
           words,
-          {
-            yPercent: 110,
-            duration: 1,
-            ease: 'power4.out',
-            stagger: 0.08,
-          },
+          { yPercent: 110, duration: 1, ease: 'power4.out', stagger: 0.08 },
           '-=0.15'
         )
       }
@@ -65,7 +48,7 @@ export default function Hero() {
       // Parallax lento del título — se siente pesado.
       if (!prefersReduced && h1Ref.current) {
         gsap.to(h1Ref.current, {
-          y: -20,
+          y: -24,
           ease: 'none',
           scrollTrigger: {
             trigger: sectionRef.current,
@@ -83,59 +66,54 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden min-h-[100svh] flex items-center pt-[120px] pb-[80px] md:pt-[140px]"
+      className="relative flex min-h-svh items-center overflow-hidden pb-28 pt-32 md:pt-36"
     >
-      {/* CAPA 0 — grid de fondo */}
+      {/* CAPA 0 — fondo: grid + gradiente radial */}
       <GridBackground />
 
-      {/* CAPA 1 — glifo gigante de profundidad */}
+      {/* CAPA 1 — glifo gigante a la derecha, detrás de las cajas */}
       <GiantGlyph />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl px-6 md:px-12">
-        {/* CAPA 4 — eyebrow */}
-        <div
-          ref={eyebrowRef}
-          className="font-mono text-[11px] uppercase tracking-[0.22em] text-[#929AAB] mb-8"
-        >
-          Linux Setup Generator · 2026
-        </div>
+      {/* Grid editorial de 10 columnas — texto izquierda, apoyo derecha */}
+      <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 gap-y-12 px-6 md:px-12 lg:grid-cols-10 lg:gap-x-8">
+        {/* Columnas 1–6 — eyebrow, título, subhead, CTAs */}
+        <div className="lg:col-span-6">
+          <div
+            ref={eyebrowRef}
+            className="mb-8 font-mono text-[11px] uppercase tracking-[0.22em] text-[#929AAB]"
+          >
+            Linux Setup Generator · 2026
+          </div>
 
-        {/* CAPA 2 — título como statement */}
-        <h1
-          ref={h1Ref}
-          className="max-w-[16ch] text-[#F5F5F7]"
-          style={{
-            fontFamily: 'var(--font-dxgaster)',
-            fontWeight: 100,
-            fontSize: 'clamp(40px, 11vw, 150px)',
-            lineHeight: 0.9,
-          }}
-        >
-          {H1_WORDS.map((word, i) => (
-            <span
-              key={i}
-              className="inline-block overflow-hidden align-top"
-              style={{ marginRight: i === H1_WORDS.length - 1 ? 0 : '0.22em' }}
-            >
-              <span
-                className="word-inner inline-block"
-                style={
-                  word.italic
-                    ? { fontStyle: 'italic', color: '#D3D5FD' }
-                    : undefined
-                }
-              >
-                {word.text}
+          <h1
+            ref={h1Ref}
+            className="font-[family-name:var(--font-dxgaster)] font-thin leading-[0.92] text-[#F5F5F7] text-[clamp(48px,9vw,130px)]"
+          >
+            {H1_LINES.map((line, li) => (
+              <span key={li} className="block">
+                {line.map((word, wi) => (
+                  <span
+                    key={wi}
+                    className={`inline-block overflow-hidden align-top ${
+                      wi === line.length - 1 ? '' : 'mr-[0.22em]'
+                    }`}
+                  >
+                    <span
+                      className={`word-inner inline-block ${
+                        word.italic ? 'italic text-[#D3D5FD]' : ''
+                      }`}
+                    >
+                      {word.text}
+                    </span>
+                  </span>
+                ))}
               </span>
-            </span>
-          ))}
-        </h1>
+            ))}
+          </h1>
 
-        {/* CAPA 4 — subhead + CTAs */}
-        <div className="mt-10 max-w-[460px]">
           <p
             ref={subheadRef}
-            className="font-sans font-light text-[16px] leading-[1.6] text-[#929AAB]"
+            className="mt-10 max-w-md font-sans text-base font-light leading-relaxed text-[#929AAB]"
           >
             Habla con el agente, describe cómo usas tu sistema y recibe una
             configuración Linux con script post-instalación revisable.
@@ -144,63 +122,35 @@ export default function Hero() {
           <div ref={ctasRef} className="mt-8 flex items-center gap-5">
             <a
               href="/setup"
-              className="inline-flex items-center rounded-md bg-[#F5F5F7] px-7 py-3.5 text-sm text-[#0B0B0D] transition-colors duration-200 hover:bg-[#D3D5FD]"
+              className="btn h-auto min-h-0 rounded-md border-none bg-[#F5F5F7] px-7 py-3.5 text-sm font-normal text-[#0B0B0D] shadow-none transition-colors duration-200 hover:bg-[#D3D5FD]"
             >
               Crear mi setup →
             </a>
             <a
               href="#preview"
-              className="text-sm text-[#929AAB] underline-offset-[3px] transition-colors duration-200 hover:text-[#F5F5F7] hover:underline"
+              className="text-sm text-[#929AAB] underline-offset-4 transition-colors duration-200 hover:text-[#F5F5F7] hover:underline"
             >
               Ver ejemplo →
             </a>
           </div>
         </div>
 
-        {/* CAPA 3 — cajas flotantes (desktop: absolutas y asimétricas) */}
-        {/* Caja 1 — mini terminal, superior derecha */}
-        <div className="lg:pointer-events-none lg:absolute lg:inset-0 lg:z-20">
-          <div className="mt-12 lg:mt-0 lg:pointer-events-auto lg:absolute lg:right-0 lg:top-[8%] lg:w-[360px]">
-            <FloatingCard delay={0.9} parallax={40} className="p-5">
-              <div className="mb-4 flex items-center gap-3">
-                <div className="flex items-center gap-1.5">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#FF5F56]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#FFBD2E]" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#27C93F]" />
-                </div>
-                <span className="font-mono text-[10px] text-[#474A56]">mi-linux — agente</span>
-              </div>
-              <div className="flex flex-col gap-2 font-mono text-[12px] leading-relaxed">
-                {TERMINAL_LINES.map((line, i) => (
-                  <div key={i} style={{ color: line.color }}>
-                    {line.prefix && <span className="font-medium">{line.prefix} </span>}
-                    {line.text}
-                  </div>
-                ))}
-                <span className="animate-pulse text-[#F5F5F7]">█</span>
-              </div>
-            </FloatingCard>
-          </div>
+        {/* Columnas 7–10 — cajas flotantes en el espacio negativo derecho.
+            Arrancan más abajo que la línea ancha del título para no chocar. */}
+        <div className="flex flex-col items-start gap-5 lg:col-span-4 lg:items-end lg:pt-28">
+          <FloatingCard delay={0.9} parallax={40} className="w-full max-w-[380px]">
+            <TerminalPreview />
+          </FloatingCard>
 
-          {/* Caja 2 — badge de estado, inferior con offset */}
-          <div className="mt-5 lg:mt-0 lg:pointer-events-auto lg:absolute lg:right-[14%] lg:bottom-[10%]">
-            <FloatingCard delay={1.15} parallax={60} className="px-5 py-3.5">
-              <div className="flex items-center gap-3 font-mono text-[12px]">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#27C93F] opacity-60" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#27C93F]" />
-                </span>
-                <span className="text-[#929AAB]">
-                  <span className="text-[#F5F5F7]">v0.1</span> · Arch + CachyOS
-                </span>
-              </div>
-            </FloatingCard>
-          </div>
+          {/* Badge con offset izquierdo respecto a la terminal */}
+          <FloatingCard delay={1.15} parallax={60} className="lg:mr-24">
+            <StatusBadge />
+          </FloatingCard>
         </div>
       </div>
 
-      {/* CAPA 4 — indicador de scroll */}
-      <div className="absolute bottom-8 left-6 z-10 md:left-12">
+      {/* CAPA 4 — scroll indicator abajo-centro */}
+      <div className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2">
         <ScrollIndicator />
       </div>
     </section>

@@ -51,10 +51,7 @@ export default function Navbar() {
           height={32}
           className="object-contain"
         />
-        <span
-          className="font-display text-[#F5F5F7]"
-          style={{ fontFamily: 'var(--font-dxgaster)', fontSize: '18px', fontWeight: 100 }}
-        >
+        <span className="font-[family-name:var(--font-dxgaster)] text-lg font-thin text-[#F5F5F7]">
           Mi Linux
         </span>
       </a>

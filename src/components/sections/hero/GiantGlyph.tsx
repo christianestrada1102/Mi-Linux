@@ -6,8 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Glifo gigante ">" — el prompt de la terminal como textura de profundidad.
-// Apenas visible sobre el fondo; da capa y peso, no es contenido legible.
+// Capa 1 — glifo ">" gigante a la derecha, parcialmente fuera del viewport.
+// Textura de profundidad detrás de las cajas flotantes, nunca detrás del título.
 export default function GiantGlyph() {
   const glyphRef = useRef<HTMLDivElement>(null)
 
@@ -20,7 +20,7 @@ export default function GiantGlyph() {
 
     const ctx = gsap.context(() => {
       gsap.to(el, {
-        yPercent: -18,
+        yPercent: -15,
         ease: 'none',
         scrollTrigger: {
           trigger: el,
@@ -38,17 +38,9 @@ export default function GiantGlyph() {
     <div
       ref={glyphRef}
       aria-hidden
-      className="pointer-events-none absolute inset-0 flex items-center justify-center select-none"
+      className="pointer-events-none absolute -right-[8%] top-1/2 -translate-y-1/2 select-none lg:-right-[4%]"
     >
-      <span
-        className="leading-none text-[#16161A]"
-        style={{
-          fontFamily: 'var(--font-dxgaster)',
-          fontWeight: 100,
-          fontSize: 'clamp(320px, 52vw, 680px)',
-          transform: 'rotate(-6deg)',
-        }}
-      >
+      <span className="block -rotate-[8deg] font-[family-name:var(--font-dxgaster)] font-thin leading-none text-[#16161A] text-[clamp(280px,42vw,700px)]">
         &gt;
       </span>
     </div>

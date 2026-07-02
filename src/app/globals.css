@@ -78,29 +78,3 @@ html.lenis {
   overscroll-behavior: contain;
 }
 
-/* Utilidades base */
-.font-display { font-family: var(--font-display); font-weight: 100; }
-.font-mono    { font-family: var(--font-mono); }
-.text-accent  { color: var(--color-accent); }
-.text-muted   { color: var(--color-text-2); }
-.text-dim     { color: var(--color-muted); }
-
-/* Animaciones de entrada — controladas por GSAP */
-.fade-up {
-  opacity: 0;
-  transform: translateY(32px);
-}
-
-.fade-in {
-  opacity: 0;
-}
-
-.split-word {
-  display: inline-block;
-  overflow: hidden;
-}
-
-.split-word span {
-  display: inline-block;
-  transform: translateY(105%);
-}

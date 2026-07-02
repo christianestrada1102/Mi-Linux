@@ -3,12 +3,12 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-// Indicador de scroll con bounce infinito sutil.
+// Capa 4 — indicador de scroll con bounce infinito sutil.
 export default function ScrollIndicator() {
-  const dotRef = useRef<HTMLSpanElement>(null)
+  const arrowRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
-    const el = dotRef.current
+    const el = arrowRef.current
     if (!el) return
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -28,9 +28,9 @@ export default function ScrollIndicator() {
   }, [])
 
   return (
-    <div className="flex items-center gap-3 text-[#474A56]">
-      <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1F1F26]">
-        <span ref={dotRef} className="text-[#929AAB]">↓</span>
+    <div className="flex flex-col items-center gap-2 text-[#474A56]">
+      <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full border border-[#1F1F26]">
+        <span ref={arrowRef} className="text-sm text-[#929AAB]">↓</span>
       </span>
       <span className="font-mono text-[10px] uppercase tracking-[0.2em]">Scroll</span>
     </div>

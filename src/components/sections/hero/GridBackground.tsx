@@ -3,9 +3,8 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 
-// Líneas verticales sutiles — textura de fondo estilo editorial.
-// En desktop mostramos más columnas; en mobile reducimos densidad.
-const LINE_COUNT = 9
+// Capa 0 — líneas verticales sutiles + gradiente radial de profundidad.
+const LINE_COUNT = 10
 
 export default function GridBackground() {
   const rootRef = useRef<HTMLDivElement>(null)
@@ -31,7 +30,7 @@ export default function GridBackground() {
           duration: 1.1,
           ease: 'power3.inOut',
           stagger: 0.05,
-          delay: 0.15,
+          delay: 0.1,
         }
       )
     }, rootRef)
@@ -40,21 +39,16 @@ export default function GridBackground() {
   }, [])
 
   return (
-    <div
-      ref={rootRef}
-      aria-hidden
-      className="pointer-events-none absolute inset-0 overflow-hidden"
-    >
-      {Array.from({ length: LINE_COUNT }).map((_, i) => (
-        <span
-          key={i}
-          className="grid-line absolute top-0 bottom-0 w-px bg-[#1F1F26]"
-          style={{
-            left: `${(100 / (LINE_COUNT - 1)) * i}%`,
-            opacity: 0.4,
-          }}
-        />
-      ))}
+    <div ref={rootRef} aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {/* Gradiente radial muy sutil desde el centro */}
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_40%,#111114_0%,#0B0B0D_100%)]" />
+
+      {/* Grid de columnas */}
+      <div className="absolute inset-x-6 inset-y-0 grid grid-cols-10 md:inset-x-12">
+        {Array.from({ length: LINE_COUNT }).map((_, i) => (
+          <div key={i} className="grid-line border-l border-[#1F1F26]/40" />
+        ))}
+      </div>
     </div>
   )
 }

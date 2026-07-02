@@ -4,6 +4,7 @@ import { useEffect, useRef, type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { cn } from '@/lib/utils'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -11,13 +12,13 @@ type FloatingCardProps = {
   children: ReactNode
   className?: string
   delay?: number
-  // Distancia de parallax en scroll (px). Cada caja va a distinta velocidad.
+  // Distancia de parallax en scroll (px) — cada caja va a distinta velocidad.
   parallax?: number
 }
 
 export default function FloatingCard({
   children,
-  className = '',
+  className,
   delay = 0,
   parallax = 0,
 }: FloatingCardProps) {
@@ -49,10 +50,10 @@ export default function FloatingCard({
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, scale: 0.95, y: 8 }}
+      initial={{ opacity: 0, scale: 0.96, y: 10 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={`rounded-xl border border-[#1F1F26] bg-[#111114] ${className}`}
+      className={cn('rounded-xl border border-[#1F1F26] bg-[#111114]', className)}
     >
       {children}
     </motion.div>
