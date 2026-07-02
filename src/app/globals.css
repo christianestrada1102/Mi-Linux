@@ -1,4 +1,5 @@
-@import "tailwindcss";
+/* source(../) limita el escaneo de Tailwind a src/ */
+@import "tailwindcss" source("../");
 
 @plugin "daisyui" {
   themes: false;
